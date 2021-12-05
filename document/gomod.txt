@@ -1,0 +1,35 @@
+
+
+SET GOPROXY=https://goproxy.io,direct
+
+
+https://www.topgoer.com/%E5%85%B6%E4%BB%96/%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86.html
+
+简单粗暴的使用go module
+1.set GO111MODULE=on
+
+2.SET GOPROXY=https://goproxy.cn (这是win环境下的) export GOPROXY=https://goproxy.cn (这是mac环境下的)
+
+3.go mod init [包名] // 初始化项目(如果你是初始化项目直接 go mod init 就好了)
+
+4.在你的目录文件下会生成go.mod和go.sum文件 go.mod 里面包含了你的所有的包！
+
+5.在文件里面引入包名的时候有的编辑器会报错但是是可以正常编译的
+
+6.下载包使用go get
+
+7.修改包的版本号直接去go.mod文件修改然后go mod download
+
+
+
+go mod命令
+常用的go mod命令如下：
+
+    go mod download    下载依赖的module到本地cache（默认为$GOPATH/pkg/mod目录）
+    go mod edit        编辑go.mod文件
+    go mod graph       打印模块依赖图
+    go mod init        初始化当前文件夹, 创建go.mod文件
+    go mod tidy        增加缺少的module，删除无用的module
+    go mod vendor      将依赖复制到vendor下
+    go mod verify      校验依赖
+    go mod why         解释为什么需要依赖

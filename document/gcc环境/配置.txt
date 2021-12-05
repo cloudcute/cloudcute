@@ -1,0 +1,11 @@
+
+下载地址：
+https://sourceforge.net/projects/mingw-w64/files/mingw-w64/
+
+x86_64-posix-seh
+
+
+解压后：
+D:\sdk\mingw64\bin
+加入环境变量Path
+

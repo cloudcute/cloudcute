@@ -1,0 +1,48 @@
+https://gin-gonic.com/docs/
+
+
+要安装 Gin 包，您需要先安装 Go 并设置您的 Go 工作区。
+下载并安装它：
+go get -u github.com/gin-gonic/gin
+
+在您的代码中导入它：
+import "github.com/gin-gonic/gin"
+
+（可选）导入net/http。例如，如果使用诸如http.StatusOK.
+import "net/http"
+
+创建您的项目文件夹和cd里面
+$ mkdir -p $GOPATH/src/github.com/myusername/project && cd "$_"
+
+复制项目中的起始模板
+$ curl https://raw.githubusercontent.com/gin-gonic/examples/master/basic/main.go > main.go
+
+运行你的项目
+$ go run main.go
+
+入门
+不确定如何编写和执行 Go 代码？点击这里。
+
+首先，创建一个名为example.go：
+
+# assume the following codes in example.go file
+$ touch example.go
+接下来，将以下代码放入example.go：
+
+package main
+
+import "github.com/gin-gonic/gin"
+
+func main() {
+	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+	r.Run() // listen and serve on 0.0.0.0:8080
+}
+而且，您可以通过go run example.go以下方式运行代码：
+
+# run example.go and visit 0.0.0.0:8080/ping on browser
+$ go run example.go
