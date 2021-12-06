@@ -1,8 +1,8 @@
 package app
 
 import (
-	"cloudcute/src/package/config"
-	"cloudcute/src/package/log"
+	"cloudcute/src/module/config"
+	"cloudcute/src/module/log"
 	"cloudcute/src/routers"
 )
 

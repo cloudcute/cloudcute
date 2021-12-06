@@ -1,9 +1,9 @@
 package config
 
 import (
-	"cloudcute/src/package/log"
-	"cloudcute/src/package/utils/file_util"
-	"cloudcute/src/package/utils/path_util"
+	"cloudcute/src/module/log"
+	"cloudcute/src/module/utils/file_util"
+	"cloudcute/src/module/utils/path_util"
 	"github.com/go-playground/validator/v10"
 	"gopkg.in/ini.v1"
 )

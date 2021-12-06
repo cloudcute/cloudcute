@@ -5,6 +5,8 @@
 
 :: -a 强制重新构建
 
+::  -ldflags -X 'main.Version=$VERSION'
+
 @echo off
 
 if "%1"=="-debug" (
