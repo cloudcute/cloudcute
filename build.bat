@@ -12,5 +12,5 @@
 if "%1"=="-debug" (
     go build -o "build/debug/cloudcute.exe"
 ) else (
-    go build -a -o "build/release/cloudcute.exe" -ldflags "-w"
+    go build -a -o "build/release/cloudcute.exe" -ldflags "-w -X 'cloudcute/src/module/config.RuntimeMode=release'"
 )

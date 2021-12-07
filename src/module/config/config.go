@@ -10,6 +10,10 @@ import (
 
 var config *ini.File
 
+const devMode = "develop"
+var RuntimeMode = devMode
+var IsDev = true
+
 const defaultConfigName = "config.ini"
 const defaultConfig = `[System]
 Listen = :5666
@@ -47,10 +51,13 @@ func Init(path string) {
 			log.Panic("配置文件 %s 分区解析失败: %s", sectionName, err)
 		}
 	}
+
 	// 重设log等级
 	if !SystemConfig.Debug {
 		log.SetLevel(log.LevelInformational)
 	}
+
+	IsDev = RuntimeMode == devMode
 }
 
 // mapSection 将配置文件的 Section 映射到结构体上

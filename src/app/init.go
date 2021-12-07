@@ -2,6 +2,7 @@ package app
 
 import (
 	"cloudcute/src/module/config"
+	"cloudcute/src/module/log"
 	"flag"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -22,7 +23,6 @@ func Init() {
 	parseArgs()
 	config.Init(configPath)
 	initApp()
-	initStatic()
 	if !config.SystemConfig.Debug {
 		gin.SetMode(gin.ReleaseMode)
 	}
@@ -42,8 +42,7 @@ func initApp()  {
 ====================================================
 
 `)
-}
-
-func initStatic()  {
-	// TODO 启动静态资源
+	if config.IsDev {
+		log.Info("Dev: %v", true)
+	}
 }

@@ -4,6 +4,7 @@ import (
 	"cloudcute/src/module/config"
 	"cloudcute/src/module/log"
 	"cloudcute/src/routers"
+	"github.com/gin-gonic/gin"
 )
 
 func Start() {
@@ -18,9 +19,20 @@ func Start() {
 	//		}
 	//	}()
 	//}
+	startPublic(api)
 	var listen = config.SystemConfig.Listen
 	log.Info("开始监听 %s", listen)
 	if err := api.Run(listen); err != nil {
 		log.Error("监听错误[%s]，%s", listen, err)
 	}
 }
+
+func startPublic(api *gin.Engine)  {
+	api.Static("/static", "./public/build/static")
+	api.StaticFile("/asset-manifest.json", "./public/build/asset-manifest.json")
+	api.LoadHTMLFiles("./public/build/index.html")
+	api.GET("/", func(c *gin.Context) {
+		c.HTML(200, "index.html", nil)
+	})
+}
+
