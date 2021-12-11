@@ -17,8 +17,8 @@ func Exists(path string) bool {
 	return true
 }
 
-// CreatNestedFile 给定path创建文件，如果目录不存在就递归创建
-func CreatNestedFile(path string) (*os.File, error) {
+// CreatFile 给定path创建文件，如果目录不存在就递归创建
+func CreatFile(path string) (*os.File, error) {
 	basePath := filepath.Dir(path)
 	if !Exists(basePath) {
 		err := os.MkdirAll(basePath, 0700)

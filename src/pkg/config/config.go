@@ -10,8 +10,8 @@ import (
 
 var config *ini.File
 
-const devMode = "develop"
-var RuntimeMode = devMode
+const releaseMode = "release"
+var RuntimeMode string
 var IsDev = true
 
 const defaultConfigName = "config.ini"
@@ -29,7 +29,7 @@ func Init(path string) {
 			path = GetDefaultConfigPath()
 		}
 		var confContent = defaultConfig
-		var f, err = file_util.CreatNestedFile(path)
+		var f, err = file_util.CreatFile(path)
 		if err != nil {
 			log.Panic("无法创建配置文件, %s", err)
 		}
@@ -37,15 +37,17 @@ func Init(path string) {
 		if err != nil {
 			log.Panic("无法写入配置文件, %s", err)
 		}
-		f.Close()
+		_ = f.Close()
 	}
 	config, err = ini.Load(path)
 	if err != nil {
 		log.Panic("无法解析配置文件 '%s': %s", path, err)
 	}
 	var sections = map[string]interface{}{
-		"Database":   DatabaseConfig,
 		"System":     SystemConfig,
+		"Database":   DatabaseConfig,
+		"SSL":        SSLConfig,
+		"CORS":       CORSConfig,
 	}
 	for sectionName, sectionStruct := range sections {
 		err = mapSection(sectionName, sectionStruct)
@@ -53,13 +55,7 @@ func Init(path string) {
 			log.Panic("配置文件 %s 分区解析失败: %s", sectionName, err)
 		}
 	}
-
-	// 重设log等级
-	if !SystemConfig.Debug {
-		log.SetLevel(log.LevelInformational)
-	}
-
-	IsDev = RuntimeMode == devMode
+	IsDev = RuntimeMode != releaseMode
 }
 
 // mapSection 将配置文件的 Section 映射到结构体上

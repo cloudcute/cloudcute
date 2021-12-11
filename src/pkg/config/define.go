@@ -15,7 +15,25 @@ type database struct {
 	Host        string
 	Name        string
 	TablePrefix string
-	DBFile      string
+	DBPath      string
 	Port        int
 	Charset     string
+}
+
+// ssl ssl配置
+type ssl struct {
+	OpenSSL  bool
+	CertPath string `validate:"omitempty,required"`
+	KeyPath  string `validate:"omitempty,required"`
+	Listen   string `validate:"required"`
+}
+
+// 跨域配置
+type cors struct {
+	OpenCORS         bool
+	AllowOrigins     []string
+	AllowMethods     []string
+	AllowHeaders     []string
+	AllowCredentials bool
+	ExposeHeaders    []string
 }

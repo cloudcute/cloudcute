@@ -9,6 +9,6 @@ import (
 func Init() *gin.Engine {
 	var r = gin.Default()
 	middleware.Init(r)
-	api.InitApi(r.Group("/api"))
+	api.Init(r)
 	return r
 }

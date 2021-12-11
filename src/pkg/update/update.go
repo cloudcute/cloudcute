@@ -1,4 +1,8 @@
-package app
+package update
+
+func CheckUpdate() {
+	go checkUpdate()
+}
 
 //type GitHubRelease struct {
 //	URL  string `json:"html_url"`

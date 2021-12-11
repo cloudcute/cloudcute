@@ -1,9 +1,13 @@
 package app
 
 import (
+	"cloudcute/src/models"
 	"cloudcute/src/pkg/config"
 	"cloudcute/src/pkg/log"
+	"cloudcute/src/pkg/update"
 	"cloudcute/src/pkg/utils/path_util"
+	"cloudcute/src/pkg/utils/utils"
+	"cloudcute/src/routers/middleware"
 	"flag"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -13,21 +17,27 @@ import (
 
 var (
 	configPath string
+	exportStatic bool
 )
 
 func parseArgs() {
 	flag.StringVar(&configPath, "c", config.GetDefaultConfigPath(), "配置文件路径")
+	flag.BoolVar(&exportStatic, "export", false, "导出静态资源")
 	flag.Parse()
 }
 
 // Init 初始化
 func Init() {
 	parseArgs()
-	go checkUpdate()
 	initConfig()
+	initLog()
+
+	initCommand()
+
+	update.CheckUpdate()
 	initAppInfo()
 	initMode()
-	initLog()
+	models.Init()
 }
 
 func initConfig()  {
@@ -49,7 +59,7 @@ func initAppInfo()  {
 
 `)
 	if config.IsDev {
-		log.Info("Dev: %v", true)
+		log.Info("Dev Mode")
 	}
 }
 
@@ -60,6 +70,9 @@ func initMode()  {
 }
 
 func initLog()  {
+	if !config.SystemConfig.Debug {
+		log.SetLevel(log.LevelInfo)
+	}
 	gin.DisableConsoleColor()
 	var logPath = path_util.GetAbsPath("gin_log.txt")
 	var f, _ = os.Create(logPath)
@@ -67,5 +80,12 @@ func initLog()  {
 		gin.DefaultWriter = io.MultiWriter(f)
 	}else {
 		gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+	}
+}
+
+func initCommand() {
+	if exportStatic {
+		middleware.ExportStatic()
+		utils.WaitExit()
 	}
 }
