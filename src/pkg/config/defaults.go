@@ -4,6 +4,7 @@ package config
 var SystemConfig = &system{
 	Debug:  false,
 	Listen: ":5666",
+	OpenWeb: true,
 }
 
 // DatabaseConfig 数据库配置

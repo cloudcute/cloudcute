@@ -2,8 +2,11 @@ module cloudcute
 
 go 1.17
 
+require gopkg.in/yaml.v2 v2.4.0
+
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
+	github.com/gin-contrib/static v0.0.1 // indirect
 	github.com/gin-gonic/gin v1.7.7 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
@@ -19,6 +22,5 @@ require (
 	golang.org/x/sys v0.0.0-20211204120058-94396e421777 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
-	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/ini.v1 v1.66.2 // indirect
 )

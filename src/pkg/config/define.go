@@ -4,6 +4,7 @@ package config
 type system struct {
 	Listen        string `validate:"required"`
 	Debug         bool
+	OpenWeb       bool
 }
 
 // database 数据库

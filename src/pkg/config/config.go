@@ -1,9 +1,9 @@
 package config
 
 import (
-	"cloudcute/src/module/log"
-	"cloudcute/src/module/utils/file_util"
-	"cloudcute/src/module/utils/path_util"
+	"cloudcute/src/pkg/log"
+	"cloudcute/src/pkg/utils/file_util"
+	"cloudcute/src/pkg/utils/path_util"
 	"github.com/go-playground/validator/v10"
 	"gopkg.in/ini.v1"
 )
@@ -17,6 +17,8 @@ var IsDev = true
 const defaultConfigName = "config.ini"
 const defaultConfig = `[System]
 Listen = :5666
+OpenWeb = true
+Debug = false
 `
 
 // Init 初始化配置文件

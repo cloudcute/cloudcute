@@ -1,14 +1,16 @@
 package app
 
 import (
-	"cloudcute/src/module/config"
-	"cloudcute/src/module/log"
+	"cloudcute/src/pkg/config"
+	"cloudcute/src/pkg/log"
+	"cloudcute/src/pkg/utils/file_util"
 	"cloudcute/src/routers"
+	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
 
 func Start() {
-	var api = routers.Init()
+	var r = routers.Init()
 	//// 如果启用了SSL
 	//if conf.SSLConfig.CertPath != "" {
 	//	go func() {
@@ -19,20 +21,27 @@ func Start() {
 	//		}
 	//	}()
 	//}
-	startPublic(api)
+	initStatic(r)
 	var listen = config.SystemConfig.Listen
 	log.Info("开始监听 %s", listen)
-	if err := api.Run(listen); err != nil {
+	if err := r.Run(listen); err != nil {
 		log.Error("监听错误[%s]，%s", listen, err)
 	}
 }
 
-func startPublic(api *gin.Engine)  {
-	api.Static("/static", "./public/build/static")
-	api.StaticFile("/asset-manifest.json", "./public/build/asset-manifest.json")
-	api.LoadHTMLFiles("./public/build/index.html")
-	api.GET("/", func(c *gin.Context) {
-		c.HTML(200, "index.html", nil)
-	})
+func initStatic(r *gin.Engine)  {
+	if !config.SystemConfig.OpenWeb {
+		return
+	}
+	var staticPath string
+	if config.IsDev {
+		staticPath = "public/build"
+	}else{
+		staticPath = "public"
+	}
+	if !file_util.Exists(staticPath) {
+		log.Error("未找到静态资源：%s", staticPath)
+		return
+	}
+	r.Use(static.Serve("/", static.LocalFile(staticPath, false)))
 }
-

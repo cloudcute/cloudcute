@@ -1,7 +1,7 @@
 package file_util
 
 import (
-	"cloudcute/src/module/log"
+	"cloudcute/src/pkg/log"
 	"io"
 	"os"
 	"path/filepath"

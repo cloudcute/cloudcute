@@ -1,11 +1,14 @@
 package app
 
 import (
-	"cloudcute/src/module/config"
-	"cloudcute/src/module/log"
+	"cloudcute/src/pkg/config"
+	"cloudcute/src/pkg/log"
+	"cloudcute/src/pkg/utils/path_util"
 	"flag"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"io"
+	"os"
 )
 
 var (
@@ -19,16 +22,19 @@ func parseArgs() {
 
 // Init 初始化
 func Init() {
-	go checkUpdate()
 	parseArgs()
-	config.Init(configPath)
-	initApp()
-	if !config.SystemConfig.Debug {
-		gin.SetMode(gin.ReleaseMode)
-	}
+	go checkUpdate()
+	initConfig()
+	initAppInfo()
+	initMode()
+	initLog()
 }
 
-func initApp()  {
+func initConfig()  {
+	config.Init(configPath)
+}
+
+func initAppInfo()  {
 	fmt.Print(`
    _____ _                 _    _____      _       
   / ____| |               | |  / ____|    | |      
@@ -44,5 +50,22 @@ func initApp()  {
 `)
 	if config.IsDev {
 		log.Info("Dev: %v", true)
+	}
+}
+
+func initMode()  {
+	if !config.SystemConfig.Debug {
+		gin.SetMode(gin.ReleaseMode)
+	}
+}
+
+func initLog()  {
+	gin.DisableConsoleColor()
+	var logPath = path_util.GetAbsPath("gin_log.txt")
+	var f, _ = os.Create(logPath)
+	if !config.SystemConfig.Debug {
+		gin.DefaultWriter = io.MultiWriter(f)
+	}else {
+		gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 	}
 }
