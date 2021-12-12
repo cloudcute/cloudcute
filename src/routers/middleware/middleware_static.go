@@ -3,8 +3,8 @@ package middleware
 import (
 	"cloudcute/src/pkg/config"
 	"cloudcute/src/pkg/log"
-	"cloudcute/src/pkg/utils/file_util"
-	"cloudcute/src/pkg/utils/path_util"
+	"cloudcute/src/pkg/utils/file"
+	"cloudcute/src/pkg/utils/path"
 	"cloudcute/src/routers/api"
 	_ "cloudcute/statik" // 嵌入的静态资源, 手动引入后才可直接使用statik包
 	"github.com/gin-contrib/static"
@@ -12,7 +12,6 @@ import (
 	"github.com/rakyll/statik/fs"
 	"io"
 	"net/http"
-	"path"
 	"strings"
 )
 
@@ -31,7 +30,7 @@ func (f *statikFS) Open(name string) (http.File, error) {
 func (f *statikFS) Exists(prefix string, filepath string) bool {
 	if p := strings.TrimPrefix(filepath, prefix); len(p) < len(filepath) {
 		if !strings.HasPrefix(p,"/") {
-			p = "/" + p;
+			p = "/" + p
 		}
 		if _, err := f.Open(p); err != nil {
 			return false
@@ -46,7 +45,7 @@ func initStatic(r *gin.Engine) {
 		return
 	}
 	var staticPath = getStaticPath()
-	if file_util.Exists(staticPath) {
+	if file.Exists(staticPath) {
 		// 如果目录存在, 直接使用文件夹中的静态资源
 		log.Info("使用本地的静态资源: %s", staticPath)
 		r.Use(serve(UrlPrefix, static.LocalFile(staticPath, false)))
@@ -87,7 +86,7 @@ func serve(urlPrefix string, fs static.ServeFileSystem) gin.HandlerFunc {
 func getStaticPath() string {
 	var staticPath string
 	if config.IsDev {
-		staticPath = path_util.GetAbsPath("./../../public/build")
+		staticPath = path.GetAbsPath("./../../public/build")
 	}else{
 		staticPath = "public"
 	}
@@ -113,8 +112,8 @@ func ExportStatic() {
 			return
 		}
 		if !stat.IsDir() {
-			out, err := file_util.CreatFile(path_util.GetAbsPath(staticPath + relPath))
-			defer out.Close()
+			out, err := file.CreatFile(path.GetAbsPath(staticPath + relPath))
+			defer func() { _ = out.Close() }()
 			if err != nil {
 				log.Error("无法创建文件: [%s], %s, 跳过导出...", relPath, err)
 				return

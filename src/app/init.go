@@ -5,7 +5,7 @@ import (
 	"cloudcute/src/pkg/config"
 	"cloudcute/src/pkg/log"
 	"cloudcute/src/pkg/update"
-	"cloudcute/src/pkg/utils/path_util"
+	"cloudcute/src/pkg/utils/path"
 	"cloudcute/src/pkg/utils/utils"
 	"cloudcute/src/routers/middleware"
 	"flag"
@@ -74,7 +74,7 @@ func initLog()  {
 		log.SetLevel(log.LevelInfo)
 	}
 	gin.DisableConsoleColor()
-	var logPath = path_util.GetAbsPath("gin_log.txt")
+	var logPath = path.GetAbsPath("gin_log.txt")
 	var f, _ = os.Create(logPath)
 	if !config.SystemConfig.Debug {
 		gin.DefaultWriter = io.MultiWriter(f)

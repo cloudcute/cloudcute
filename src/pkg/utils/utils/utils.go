@@ -8,7 +8,7 @@ import (
 // Pause 程序暂停 按键继续
 func Pause() {
 	fmt.Println("请按Enter键继续...")
-	fmt.Scanln()
+	_ , _ = fmt.Scanln()
 //	fmt.Println("请按任意键继续...")
 //Loop:
 //	for {

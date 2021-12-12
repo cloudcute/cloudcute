@@ -1,5 +1,7 @@
 package config
 
+const AppName = "cloudcute"
+
 // SystemConfig 系统公用配置
 var SystemConfig = &system{
 	Debug:  false,
@@ -11,9 +13,11 @@ var SystemConfig = &system{
 var DatabaseConfig = &database{
 	Type:        "",
 	Charset:     "utf8",
-	DBPath:      "cloudcute.db",
+	DBPath:      AppName + ".db",
 	Port:        3306,
-	TablePrefix: "cloudcute_",
+	TablePrefix: AppName + "_",
+	Name:        AppName,
+	Host:        "localhost",
 }
 
 // SSLConfig SSL配置

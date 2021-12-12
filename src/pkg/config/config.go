@@ -2,8 +2,8 @@ package config
 
 import (
 	"cloudcute/src/pkg/log"
-	"cloudcute/src/pkg/utils/file_util"
-	"cloudcute/src/pkg/utils/path_util"
+	"cloudcute/src/pkg/utils/file"
+	"cloudcute/src/pkg/utils/path"
 	"github.com/go-playground/validator/v10"
 	"gopkg.in/ini.v1"
 )
@@ -24,12 +24,12 @@ Debug = false
 // Init 初始化配置文件
 func Init(path string) {
 	var err error
-	if path == "" || !file_util.Exists(path) {
+	if path == "" || !file.Exists(path) {
 		if path == "" {
 			path = GetDefaultConfigPath()
 		}
 		var confContent = defaultConfig
-		var f, err = file_util.CreatFile(path)
+		var f, err = file.CreatFile(path)
 		if err != nil {
 			log.Panic("无法创建配置文件, %s", err)
 		}
@@ -74,5 +74,5 @@ func mapSection(section string, confStruct interface{}) error {
 }
 
 func GetDefaultConfigPath() string {
-	return path_util.GetAbsPath(defaultConfigName)
+	return path.GetAbsPath(defaultConfigName)
 }

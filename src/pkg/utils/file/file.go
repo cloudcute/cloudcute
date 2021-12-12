@@ -1,4 +1,4 @@
-package file_util
+package file
 
 import (
 	"cloudcute/src/pkg/log"
@@ -36,7 +36,7 @@ func IsEmpty(name string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 
 	_, err = f.Readdirnames(1) // Or f.Readdir(1)
 	if err == io.EOF {
