@@ -45,10 +45,11 @@ func initStatic(r *gin.Engine) {
 		return
 	}
 	var staticPath = getStaticPath()
-	if file.Exists(staticPath) {
+	var staticFullPath = path.GetAbsPath(staticPath)
+	if file.Exists(staticFullPath) {
 		// 如果目录存在, 直接使用文件夹中的静态资源
 		log.Info("使用本地的静态资源: %s", staticPath)
-		r.Use(serve(UrlPrefix, static.LocalFile(staticPath, false)))
+		r.Use(serve(UrlPrefix, static.LocalFile(staticFullPath, false)))
 		return
 	}
 	// 使用内嵌的静态资源
@@ -88,7 +89,7 @@ func getStaticPath() string {
 	if config.IsDev {
 		staticPath = path.GetAbsPath("./../../public/build")
 	}else{
-		staticPath = "public"
+		staticPath = "./public"
 	}
 	return staticPath
 }

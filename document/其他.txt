@@ -3,3 +3,9 @@
 
 https://patorjk.com/software/taag/#p=display&f=Big&t=Cloud%20Cute
 
+
+执行go install以生成bin文件
+
+重新执行
+go get github.com/rakyll/statik
+生成statik可执行文件
