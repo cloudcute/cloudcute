@@ -13,9 +13,11 @@ type Setting struct {
 	Value string `gorm:"size:65535"`
 }
 
-const DBVersionKey = "db_version" + config.DBVersion
-const ServerVersionKey = "app_version"
-const WebVersionKey = "web_version"
+const (
+	DBVersionKey       = "db_version" + config.DBVersion
+	ServerVersionKey   = "app_version"
+	WebVersionKey      = "web_version"
+)
 
 func InitSettingData() {
 	var s = []Setting{

@@ -1,11 +1,11 @@
 package middleware
 
 import (
+	"cloudcute/src/models/define"
 	"cloudcute/src/pkg/config"
 	"cloudcute/src/pkg/log"
 	"cloudcute/src/pkg/utils/file"
 	"cloudcute/src/pkg/utils/path"
-	"cloudcute/src/routers/api"
 	_ "cloudcute/statik" // 嵌入的静态资源, 手动引入后才可直接使用statik包
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
@@ -18,7 +18,9 @@ import (
 // UrlPrefix 访问静态路径前缀
 const UrlPrefix = "/"
 // 静态中间件跳过处理的路径
-var skipPath = []string{ api.UrlPrefix }
+var skipPath = []string{
+	define.APIPrefix,
+}
 
 type statikFS struct {
 	f http.FileSystem
@@ -26,7 +28,6 @@ type statikFS struct {
 func (f *statikFS) Open(name string) (http.File, error) {
 	return f.f.Open(name)
 }
-
 func (f *statikFS) Exists(prefix string, filepath string) bool {
 	if p := strings.TrimPrefix(filepath, prefix); len(p) < len(filepath) {
 		if !strings.HasPrefix(p,"/") {

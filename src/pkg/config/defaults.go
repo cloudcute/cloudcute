@@ -7,6 +7,7 @@ var SystemConfig = &system{
 	Debug:  false,
 	Listen: ":5666",
 	OpenWeb: true,
+	SignKey: "__cloudcute",
 }
 
 // DatabaseConfig 数据库配置

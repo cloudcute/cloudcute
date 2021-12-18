@@ -7,12 +7,14 @@ type Group struct {
 	Name          string
 }
 
-const GroupSuperAdmin uint = 1
-const GroupAdmin uint = 2
-const GroupUser uint = 3
+const (
+	GroupSuperAdmin uint = 1
+	GroupAdmin uint      = 2
+	GroupUser uint       = 3
+)
 
 var GroupNames = map[uint] string {
 	GroupSuperAdmin : "超级管理员",
-	GroupAdmin : "管理员",
-	GroupUser : "用户",
+	GroupAdmin      : "管理员",
+	GroupUser       : "用户",
 }

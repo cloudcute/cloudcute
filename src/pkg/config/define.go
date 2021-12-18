@@ -5,6 +5,7 @@ type system struct {
 	Listen        string `validate:"required"`
 	Debug         bool
 	OpenWeb       bool
+	SignKey       string
 }
 
 // database 数据库
