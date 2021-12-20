@@ -41,8 +41,29 @@ func Create(data interface{}) error {
 	return result.Error
 }
 
-// First 查找列第一个匹配数据
-func First(queryName string, value interface{}, data interface{}) error {
+// First 根据ID查找列第一个匹配数据
+func First(ID interface{}, data interface{}) error {
+	var result = DB.First(data, ID)
+	return result.Error
+}
+
+// FirstQuery 查找列第一个匹配数据
+func FirstQuery(queryName string, value interface{}, data interface{}) error {
+	var query = fmt.Sprintf("%s = ?", queryName)
+	var result = DB.Where(query, value).First(data)
+	return result.Error
+}
+
+// FirstPreload 根据ID查找列第一个匹配数据 自动完成关联查询
+func FirstPreload(ID interface{}, data interface{}) error {
+	// auto_preload 查询时自动完成关联查询
+	var result = DB.First(data, ID)
+	return result.Error
+}
+
+// FirstQueryPreload 查找列第一个匹配数据 自动完成关联查询
+func FirstQueryPreload(queryName string, value interface{}, data interface{}) error {
+	// auto_preload 查询时自动完成关联查询
 	var query = fmt.Sprintf("%s = ?", queryName)
 	var result = DB.Where(query, value).First(data)
 	return result.Error

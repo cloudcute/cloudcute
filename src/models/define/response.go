@@ -22,12 +22,15 @@ func CreateResponse(code int, data interface{}, msg string) Response {
 	}
 }
 
-func GetResponse(data interface{}, msg string) Response {
-	return CreateResponse(StatusOk, data, msg)
+func GetResponse(data interface{}) Response {
+	return CreateResponse(StatusOk, data, "")
 }
 
-func GetErrorResponse(err error) Response {
+func GetErrorResponseByError(title string, err error) Response {
+	return GetErrorResponseByStr(title, err.Error())
+}
+
+func GetErrorResponseByStr(title string, err string) Response {
 	var errorCode = ErrorCode
-	var errStr = err.Error()
-	return CreateErrorResponse(errorCode, "error", errStr)
+	return CreateErrorResponse(errorCode, title, err)
 }

@@ -6,5 +6,5 @@ import (
 )
 
 func Logout(c *gin.Context) define.Response {
-	return define.GetResponse(nil, "ok")
+	return define.GetResponse(nil)
 }

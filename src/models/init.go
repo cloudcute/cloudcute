@@ -28,7 +28,7 @@ func verifyVersion() bool {
 		return false
 	}
 	var s setting.Setting
-	var err = sql.First("name", setting.DBVersionKey, &s)
+	var err = sql.FirstQuery("name", setting.DBVersionKey, &s)
 	return err == nil
 }
 

@@ -8,7 +8,7 @@ import (
 func CreateToken(u user.User) (string, error) {
 	var t = token.Token{
 		UserID: string(u.ID),
-		Name: u.Email,
+		Name: u.UserName,
 	}
 	return token.CreateToken(t)
 }
